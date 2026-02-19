@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wallet Pool Admin</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="panel" id="login-panel">
+        <h1>Admin Login</h1>
+        <p class="muted">Use your admin user ID and password.</p>
+        <form id="login-form">
+          <label>
+            User ID
+            <input type="text" name="userId" required />
+          </label>
+          <label>
+            Password
+            <input type="password" name="password" required />
+          </label>
+          <button type="submit">Sign In</button>
+        </form>
+        <p class="error" id="login-error"></p>
+      </section>
+
+      <section class="panel hidden" id="dashboard">
+        <header class="dash-header">
+          <div>
+            <h1>Wallet Pool Dashboard</h1>
+            <p class="muted">BNB Chain distribution status.</p>
+          </div>
+          <button id="logout">Log out</button>
+        </header>
+
+        <div class="grid">
+          <div class="card">
+            <h2>Total Wallets</h2>
+            <p class="stat" id="total-wallets">0</p>
+          </div>
+          <div class="card">
+            <h2>Unused</h2>
+            <p class="stat" id="unused-wallets">0</p>
+          </div>
+          <div class="card">
+            <h2>Reserved</h2>
+            <p class="stat" id="reserved-wallets">0</p>
+          </div>
+          <div class="card">
+            <h2>Used</h2>
+            <p class="stat" id="used-wallets">0</p>
+          </div>
+          <div class="card">
+            <h2>Token Contract</h2>
+            <p class="stat mono" id="token-contract">-</p>
+          </div>
+          <div class="card">
+            <h2>Max Distribution Amount</h2>
+            <p class="stat" id="distribution-amount">-</p>
+          </div>
+          <div class="card">
+            <h2>Daily Target</h2>
+            <p class="stat" id="daily-target">-</p>
+          </div>
+          <div class="card">
+            <h2>Send Target</h2>
+            <p class="stat" id="total-target">-</p>
+          </div>
+          <div class="card">
+            <h2>Sender Key</h2>
+            <p class="stat mono" id="sender-key">-</p>
+          </div>
+        </div>
+
+        <div class="panel inner">
+          <div class="toolbar">
+            <h2>System Controls</h2>
+            <span class="status" id="runtime-status">Unknown</span>
+          </div>
+          <div class="button-row">
+            <button id="toggle-runtime">Stop</button>
+            <button id="download-wallets" class="secondary">Download CSV</button>
+            <button id="reset-wallets" class="danger">Reset Wallets</button>
+          </div>
+          <p class="muted small" id="action-error"></p>
+          <div class="panel inner">
+            <div class="toolbar">
+              <h3>Distribution Settings</h3>
+              <button id="save-config" class="secondary">Save</button>
+            </div>
+            <div class="form-grid">
+              <label>
+                Token Contract
+                <input type="text" id="config-token-contract" />
+              </label>
+              <label>
+                Max Distribution Amount
+                <input type="text" id="config-amount" />
+              </label>
+              <label>
+                Sender Private Key (masked)
+                <input type="password" id="config-sender-key" placeholder="Leave blank to keep current" />
+              </label>
+              <label>
+                Daily Distribution Target
+                <input type="number" id="config-daily-target" min="0" step="1" />
+              </label>
+              <label>
+                Total Distribution Target
+                <input type="number" id="config-total-target" min="0" step="1" />
+              </label>
+            </div>
+            <p class="muted small" id="config-status"></p>
+          </div>
+          <div class="info-row">
+            <div>
+              <p class="label">Next Send Time</p>
+              <p class="value" id="next-send-time">-</p>
+            </div>
+            <div>
+              <p class="label">Countdown</p>
+              <p class="value" id="next-send-countdown">-</p>
+            </div>
+            <div>
+              <p class="label">Total Confirmed</p>
+              <p class="value" id="total-confirmed">-</p>
+            </div>
+          </div>
+          <p class="muted small">
+            Reset deletes all wallets and distributions, then regenerates the wallet pool.
+          </p>
+        </div>
+
+        <div class="panel inner">
+          <div class="toolbar">
+            <h2>Recent Distributions</h2>
+            <button id="refresh">Refresh</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Wallet</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Scheduled For</th>
+                  <th>Tx Hash</th>
+                </tr>
+              </thead>
+              <tbody id="dist-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
